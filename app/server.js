@@ -1,24 +1,15 @@
 require('dotenv').config()
 
-const express = require('express')
-const app = express()
-const jwt = require('jsonwebtoken')
-app.use(express.json())
+const express = require('express');
+const app = express();
+const MongoDbConnection = require('./MongoDbConnection');
+const jwt = require('jsonwebtoken');
+app.use(express.json());
 
-const posts = [
-  {
-    'username': 'John',
-    'title': 'John title blah blah blah'
-  },
-  {
-    'username': 'Bella',
-    'title': 'Bella title blah blah blah'
-  },
-  {
-    'username': 'Mary',
-    'title': 'Mary title blah blah blah'
-  }
-]
+const getDeliveredOrders = () => {
+  return MongoDbConnection.deliveredOrders.find().toArray()
+  .catch(error => console.log('🚀 ~ error', error));
+}
 
 const authenticateToken = (req, res, next) => {
   const authHeader = req.headers['authorization']
@@ -33,7 +24,9 @@ const authenticateToken = (req, res, next) => {
 }
 
 app.get('/posts', authenticateToken, (req, res) => {
-  res.json(posts.filter(post => post.username === req.user.name))
+  getDeliveredOrders()
+  .then((posts) => res.json(posts.filter(post => post.username === req.user.name)))
+  .catch(error => console.log('🚀 ~ error', error))
 })
 
 app.post('/login', (req, res) => {
@@ -46,4 +39,10 @@ app.post('/login', (req, res) => {
   res.json({ accessToken })
 })
 
-app.listen(3000)
+const main = () => {
+  MongoDbConnection.init()
+  .then(() => app.listen(3000))
+  .catch (error => console.log('🚀 ~ error', error));
+}
+
+main();
