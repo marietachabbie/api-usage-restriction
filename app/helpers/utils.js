@@ -1,6 +1,8 @@
 require('console-error');
 const jwt = require('jsonwebtoken');
 const rateLimit = require("express-rate-limit");
+const public_api_rate_limit = process.env.PUBLIC_API_RATE_LIMIT;
+const private_api_rate_limit = process.env.PRIVATE_API_RATE_LIMIT;
 
 const output = (error) => {
   console.error(`❌ ${error.name} occured\n${error.message}`);
@@ -21,15 +23,15 @@ const authenticateToken = (req, res, next) => {
 const rateLimitByUser = rateLimit({
   keyGenerator: (req, res) => req.headers.authorization,
   windowMs: 1 * 60 * 60 * 1000,
-  max: 200,
-  message: "You exceeded 200 requests per hour limit!",
+  max: private_api_rate_limit,
+  message: `You exceeded ${private_api_rate_limit} requests per hour limit!`,
   headers: true,
 });
 
 const rateLimitByIP = rateLimit({
   windowMs: 1 * 60 * 60 * 1000,
-  max: 100,
-  message: "You exceeded 100 requests per hour limit!",
+  max: public_api_rate_limit,
+  message: `You exceeded ${public_api_rate_limit} requests per hour limit!`,
   headers: true,
 });
 
