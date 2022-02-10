@@ -5,6 +5,7 @@ const app = express();
 const MongoDbConnection = require('./models/MongoDbConnection');
 const ordersRoute = require('./routes/orders');
 const utils = require('./helpers/utils');
+const output = utils.output;
 const rateLimitByUser = utils.rateLimitByUser;
 const rateLimitByIP = utils.rateLimitByIP;
 
@@ -18,7 +19,7 @@ app.use('/', ordersRoute);
 const main = () => {
   MongoDbConnection.init()
   .then(() => app.listen(3000))
-  .catch (error => console.log('🚀 ~ error', error));
+  .catch (error => output(error));
 };
 
 main();

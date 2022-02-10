@@ -1,13 +1,15 @@
 const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
-const authenticateToken = require('../helpers/utils').authenticateToken;
+const utils = require('../helpers/utils');
+const authenticateToken = utils.authenticateToken;
+const output = utils.output;
 const getDeliveredOrders = require('../models/class-methods/getDeliveredOrders');
 
 router.get('/orders/delivered', authenticateToken, (req, res) => {
   return getDeliveredOrders()
   .then((deliveredOrders) => res.json(deliveredOrders))
-  .catch(error => console.log('📣 ~ error', error));
+  .catch(error => output(error));
 });
 
 router.get('/home', (req, res) => {
