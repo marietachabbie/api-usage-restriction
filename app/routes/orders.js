@@ -4,10 +4,14 @@ const jwt = require('jsonwebtoken');
 const authenticateToken = require('../helpers/utils').authenticateToken;
 const getDeliveredOrders = require('../models/class-methods/getDeliveredOrders')
 
-router.get('/posts', authenticateToken, (req, res) => {
+router.get('/orders/delivered', authenticateToken, (req, res) => {
   return getDeliveredOrders()
-  .then((posts) => res.json(posts.filter(post => post.username === req.user.name)))
-  .catch(error => console.log('🚀 ~ error', error))
+  .then((deliveredOrders) => res.json(deliveredOrders))
+  .catch(error => console.log('📣 ~ error', error))
+})
+
+router.get('/home', (req, res) => {
+  res.send('Welcome to home page')
 })
 
 router.post('/login', (req, res) => {

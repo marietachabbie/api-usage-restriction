@@ -1,17 +1,24 @@
-require('dotenv').config()
+require('dotenv').config();
 
 const express = require('express');
 const app = express();
 const MongoDbConnection = require('./models/MongoDbConnection');
-const postRouts = require('./routes/posts');
+const ordersRoute = require('./routes/orders');
+const utils = require('./helpers/utils');
+const rateLimitByUser = utils.rateLimitByUser;
+const rateLimitByIP = utils.rateLimitByIP;
+
+app.use('/home', rateLimitByIP);
+app.use('/login', rateLimitByIP);
+app.use('/orders/delivered', rateLimitByUser);
 
 app.use(express.json());
-app.use('/', postRouts);
+app.use('/', ordersRoute);
 
 const main = () => {
   MongoDbConnection.init()
   .then(() => app.listen(3000))
   .catch (error => console.log('🚀 ~ error', error));
-}
+};
 
 main();
