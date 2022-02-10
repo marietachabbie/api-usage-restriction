@@ -1,0 +1,15 @@
+GET http://localhost:3000/orders/delivered
+Authorization: Bearer YOUR_AUTH_TOKEN
+
+###
+
+GET http://localhost:3000/home
+
+###
+
+POST http://localhost:3000/login
+Content-Type: application/json
+
+{
+  "username": "John"
+}

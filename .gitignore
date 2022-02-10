@@ -103,5 +103,4 @@ dist
 # TernJS port file
 .tern-port
 
-requests.rest
 app/package-lock.json
