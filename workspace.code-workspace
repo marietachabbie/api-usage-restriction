@@ -1,11 +1,7 @@
 {
-	"folders": [
-		{
-			"path": "."
-		},
-		{
-			"path": "../list.am"
-		}
-	],
-  "settings": {}
+  "folders": [
+    {
+      "path": "."
+    }
+  ]
 }

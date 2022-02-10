@@ -12,7 +12,7 @@ class MongoDbConnection {
             process.env.URI,
             connectionOptions
         );
-    }
+    };
 
     static init(){
         const client = this.getClient();
@@ -23,23 +23,23 @@ class MongoDbConnection {
         return client.connect()
         .then(() => { this.deliveredOrders = client.db('ordershistoryDB').collection('delivered') })
         .catch((error) => this.catchConnectionError(error));
-    }
+    };
 
     static getCollection(){
         this.init();
-    }
+    };
 
     static onServerOpening(){
-        console.log('Successfully connected!')
-    }
+        console.log('Successfully connected!');
+    };
 
     static onServerClosing(){
-        console.log('Server disconnected!')
-    }
+        console.log('Server disconnected!');
+    };
 
     static catchConnectionError(error){
-        console.error(`Connection error: \n${error.message}`)
-    }
+        console.error(`Connection error: \n${error.message}`);
+    };
 }
 
 module.exports = MongoDbConnection;
