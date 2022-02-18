@@ -9,6 +9,7 @@ const output = utils.output;
 const rateLimitByUser = utils.rateLimitByUser;
 const rateLimitByIP = utils.rateLimitByIP;
 
+app.set('trust proxy', true);
 app.use('/home', rateLimitByIP);
 app.use('/login', rateLimitByIP);
 app.use('/orders/delivered', rateLimitByUser);

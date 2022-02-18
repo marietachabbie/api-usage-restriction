@@ -13,7 +13,7 @@ router.get('/orders/delivered', authenticateToken, (req, res) => {
 });
 
 router.get('/home', (req, res) => {
-  res.send('Welcome to home page')
+  return res.send('Welcome to home page')
 });
 
 router.post('/login', (req, res) => {
